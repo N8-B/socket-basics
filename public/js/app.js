@@ -1,3 +1,4 @@
+// CLIENT-SIDE CODE
 var socket = io();
 
 socket.on('connect', function () {
@@ -17,9 +18,10 @@ var $form = jQuery('#message-form');
 $form.on('submit', function (event) {
   event.preventDefault();
   var $message = $form.find('input[name=message]');
+  // Send input value to server
   socket.emit('message', {
     text: $message.val()
   });
-
+  // Empty input on submit
   $message.val('');
 });

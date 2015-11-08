@@ -8,14 +8,18 @@ app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function (socket) {
   console.log('User connected via socket.io!');
-
-  socket.on('message', function (message) {
-    console.log('Message received: ' + message.text);
-    io.emit('message', message);
-  });
-
+  // Message emitted by server on socket connect
   socket.emit('message', {
     text: 'Welcome to the chat application.'
+  });
+  // Server listens for message event from client/connected socket
+  socket.on('message', function (message) {
+    console.log('Message received: ' + message.text);
+    // ...and broadcasts to all connected sockets (io.emit())
+    io.emit('message', message);
+    // ...or all connected sockets except for the socket/user
+    // who sent the message (socket.broadcast.emit())
+    // socket.broadcast.emit('message', message);
   });
 });
 
