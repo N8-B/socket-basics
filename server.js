@@ -11,6 +11,7 @@ io.on('connection', function (socket) {
   console.log('User connected via socket.io!');
   // Message emitted by server on socket connect
   socket.emit('message', {
+    name: 'System',
     text: 'Welcome to the chat application.',
     timestamp: moment().valueOf()
   });
